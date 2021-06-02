@@ -1,2 +1,2 @@
-# interview_java
-30 mins task for interview
+# Interview task
+Modify the class 'Items' so that the console will display "Task solved".
