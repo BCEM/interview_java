@@ -97,26 +97,17 @@ public class Task {
         }
 
         public Collection<TKey> getActiveItems() {
-            final ArrayList<TKey> activeItems = new ArrayList<>();
-            for (Item i : items) {
-                if (!i.isDeleted()) {
-                    activeItems.add(i.getId());
-                }
-            }
-            Collections.sort(activeItems);
-            return activeItems;
+            return items.stream().filter(item -> !item.isDeleted)
+                    .sorted(Comparator.comparing(Item::getUpdatedAt).reversed())
+                    .map(Item::getId)
+                    .collect(Collectors.toList());
         }
 
         public Collection<TKey> getDeletedItems() {
-            final ArrayList<TKey> deletedItems = new ArrayList<>();
-            for (Item i : items) {
-                if (i.isDeleted()) {
-                    deletedItems.add(i.getId());
-                }
-            }
-
-            Collections.sort(deletedItems);
-            return deletedItems;
+            return items.stream().filter(item -> item.isDeleted)
+                    .sorted(Comparator.comparing(Item::getUpdatedAt))
+                    .map(Item::getId)
+                    .collect(Collectors.toList());
         }
 
         public void setActiveItems(Collection<TKey> ids) throws Exception {
