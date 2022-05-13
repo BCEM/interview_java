@@ -164,7 +164,7 @@ public class Task {
             });
 
             es.shutdown();
-            if (!es.awaitTermination(1, TimeUnit.SECONDS)) {
+            if (!es.awaitTermination(300, TimeUnit.MILLISECONDS)) {
                 throw new Exception("Task is not solved optimally");
             } else {
                 if (!IntStream.range(5000, 15000).boxed().collect(Collectors.toList())
